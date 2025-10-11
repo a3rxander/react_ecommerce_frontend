@@ -1,21 +1,35 @@
-import {Navigate} from "react-router";
+import { Navigate, useLocation } from "react-router";
 
-interface ProtectedRouteProps {
-    children: React.ReactNode;
-    role: "admin" | "seller" | "customer";
+import useAuth from "@/app/hooks/useAuth";
+
+interface RoleBasedRouteProps {
+  children: React.ReactNode;
+  role: "admin" | "seller" | "customer";
 }
 
-export default function RoleBasedRoute({children, role}: ProtectedRouteProps) {
-    //mock role check
-    const {user} = {user: {name: "John Doe", role: "seller"}};  
+export default function RoleBasedRoute({ children, role }: RoleBasedRouteProps) {
+  const location = useLocation();
+  const { user } = useAuth();
 
-    if(!user)
-    {
-        return <Navigate to="/login" replace />;
-    }
-    if (user.role !== role) {
-        return <Navigate to="/login" replace />;
-    }
+  if (!user) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location.pathname, navigationOptions: { state: location.state } }}
+      />
+    );
+  }
 
-    return <>{children}</>;
+  if (user.role !== role) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: "/" }}
+      />
+    );
+  }
+
+  return <>{children}</>;
 }

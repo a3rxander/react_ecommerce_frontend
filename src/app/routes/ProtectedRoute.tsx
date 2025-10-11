@@ -1,15 +1,24 @@
-import {Navigate} from "react-router";
+import { Navigate, useLocation } from "react-router";
+
+import useAuth from "@/app/hooks/useAuth";
 
 interface ProtectedRouteProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export default function ProtectedRoute({children}: ProtectedRouteProps) {
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const location = useLocation();
+  const { user } = useAuth();
 
-    //mock authentication check
-    const {user} = {user: {name: "John Doe", role: "seller"}};  
-    if (!user) {
-        return <Navigate to="/login" replace />;
-    }
-    return <>{children}</>;
+  if (!user) {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location.pathname, navigationOptions: { state: location.state } }}
+      />
+    );
+  }
+
+  return <>{children}</>;
 }
