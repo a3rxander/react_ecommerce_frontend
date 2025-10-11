@@ -1,6 +1,12 @@
-import {RouterProvider} from 'react-router'
-import {router} from '@/app/routes'
+import { RouterProvider } from 'react-router'
+
+import { AuthProvider } from '@/app/contexts/AuthContext'
+import { router } from '@/app/routes'
 
 export const EcommerceApp = () => {
-  return <RouterProvider router={router} />
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  )
 }
