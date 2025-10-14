@@ -1,11 +1,11 @@
 import { apiLogin } from "@/lib/api/apiLogin";
-import type { LoginCredentials } from "../types/AuthTypes";
+import type { AuthResponse, LoginCredentials } from "../types/AuthTypes";
 
 class AuthService {
-  async login(credentials: LoginCredentials) {
+  async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
       const response = await apiLogin.post("/Auth/login", credentials);
-      return response.data;
+      return response.data as AuthResponse;
     } catch (error) {
       console.error("Login error:", error);
       throw error;

@@ -1,11 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import  { EcommerceApp} from './EcommerceApp'
+import { EcommerceApp } from './EcommerceApp'
+import { AuthProvider } from './features/auth/context/AuthProvider'
 
 import './index.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <EcommerceApp />
+    <AuthProvider>
+      <EcommerceApp />
+    </AuthProvider>
   </StrictMode>,
 )
