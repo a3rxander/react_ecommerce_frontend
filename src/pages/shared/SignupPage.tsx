@@ -1,10 +1,7 @@
- 
-
 import { GalleryVerticalEnd } from "lucide-react"
-import { LoginComponent} from "@/features/auth/components/LoginComponent";
+import { SignupFormComponent} from "@/features/auth/components/SignupFormComponent";
 
-
-export default function LoginPage() {
+export default function SignupPage() {
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -14,8 +11,8 @@ export default function LoginPage() {
           </div>
           Ecommerce Inc.
         </a>
-        <LoginComponent />
+        <SignupFormComponent />
       </div>
     </div>
   )
-} 
+}

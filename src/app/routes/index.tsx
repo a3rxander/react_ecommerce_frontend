@@ -7,6 +7,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import RoleBasedRoute from "./RoleBasedRoute";
 
 import LoginPage from "@/pages/shared/LoginPage";
+import SignupPage from "@/pages/shared/SignupPage";
 
 //Admin Pages
 import UsersPage from "@/pages/admin/UsersPage";
@@ -19,7 +20,8 @@ export const router = createBrowserRouter([
     {
         element: <RootLayout />,
         children: [
-            { path: "/login", element: <LoginPage /> }
+            { path: "/login", element: <LoginPage /> },
+            { path: "/signup", element: <SignupPage /> }
         ]
     },
     //Seller Routes
