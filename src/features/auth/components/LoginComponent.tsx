@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router";
-import { useLogin } from "../hooks/useLogin";
+import { Link, useNavigate  } from "react-router";
+import { useAuth } from "@/app/hooks/useAuth";
 import type { LoginCredentials } from "../types/AuthTypes";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,7 +19,12 @@ import {
 import { Input } from "@/components/ui/input";
 
 export function LoginComponent() {
-  const { isLoading, loginAuth } = useLogin();
+  const navigate = useNavigate();
+
+  const { login } = useAuth();
+
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const [credentials, setCredentials] = useState<LoginCredentials>({
     username: "aaaaa",
@@ -33,11 +38,17 @@ export function LoginComponent() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      await loginAuth(credentials);
+      await login(credentials);
+      setIsLoading(false);
+      navigate("/dashboard");
+
+
       // Aquí podrías redirigir o guardar el usuario en contexto
     } catch (error) {
       console.error("Login error:", error);
+      setIsLoading(false);
     }
   };
 
