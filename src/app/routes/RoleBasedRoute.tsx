@@ -1,21 +1,26 @@
 import {Navigate} from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
-    role: "admin" | "seller" | "customer";
+    role: "Admin" | "Seller" | "Customer";
 }
 
 export default function RoleBasedRoute({children, role}: ProtectedRouteProps) {
-    //mock role check
-    const {user} = {user: {name: "John Doe", role: "seller"}};  
+    const {user} = useAuth();
+
+    
+    console.debug("RoleBasedRoute User Role:", user);
+    console.debug("RoleBasedRoute Required Role:", role);
 
     if(!user)
     {
         return <Navigate to="/login" replace />;
-    }
+    } 
     if (user.role !== role) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/" replace />;
     }
+    
 
     return <>{children}</>;
 }

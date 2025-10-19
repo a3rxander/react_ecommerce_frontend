@@ -42,7 +42,7 @@ export function LoginComponent() {
     try {
       await login(credentials);
       setIsLoading(false);
-      navigate("/dashboard");
+      navigate("/");
 
 
       // Aquí podrías redirigir o guardar el usuario en contexto

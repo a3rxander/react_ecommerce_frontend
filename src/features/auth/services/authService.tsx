@@ -25,7 +25,7 @@ class AuthService {
 
   async checkAuth() {
      try {
-      const response = await apiJWT.get("/Auth/check-auth");
+      const response = await apiJWT.get("/Auth/me");
       return response.data;
     } catch (error) {
       console.error("Check auth error:", error);
@@ -35,6 +35,10 @@ class AuthService {
 
   getToken() {
     return localStorage.getItem("authToken");
+  }
+
+  setToken(token: string) {
+    localStorage.setItem("authToken", token);
   }
 }
 

@@ -8,6 +8,7 @@ import RoleBasedRoute from "./RoleBasedRoute";
 
 import LoginPage from "@/pages/shared/LoginPage";
 import SignupPage from "@/pages/shared/SignupPage";
+import HomePage from "@/pages/shared/HomePage";
 
 //Admin Pages
 import UsersPage from "@/pages/admin/UsersPage";
@@ -21,7 +22,8 @@ export const router = createBrowserRouter([
         element: <RootLayout />,
         children: [
             { path: "/login", element: <LoginPage /> },
-            { path: "/signup", element: <SignupPage /> }
+            { path: "/signup", element: <SignupPage /> },
+            { path: "/", element: <HomePage /> }
         ]
     },
     //Seller Routes
@@ -29,7 +31,7 @@ export const router = createBrowserRouter([
         path: "/seller",
         element: (
             <ProtectedRoute>
-                <RoleBasedRoute role="seller">
+                <RoleBasedRoute role="Seller">
                     <SellerLayout />
                 </RoleBasedRoute>   
             </ProtectedRoute>
@@ -43,7 +45,7 @@ export const router = createBrowserRouter([
         path: "/admin",
         element: (
             <ProtectedRoute>
-                <RoleBasedRoute role="admin">
+                <RoleBasedRoute role="Admin">
                     <AdminLayout />
                 </RoleBasedRoute>   
             </ProtectedRoute>

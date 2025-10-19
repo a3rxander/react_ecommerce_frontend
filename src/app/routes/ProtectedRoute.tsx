@@ -1,15 +1,23 @@
 import {Navigate} from "react-router";
+import { useAuth } from "../hooks/useAuth";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
 }
 
-export default function ProtectedRoute({children}: ProtectedRouteProps) {
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { authState, user } = useAuth();
 
-    //mock authentication check
-    const {user} = {user: {name: "John Doe", role: "seller"}};  
-    if (!user) {
-        return <Navigate to="/login" replace />;
-    }
-    return <>{children}</>;
+  console.debug("ProtectedRoute Auth State:", authState);
+  console.debug("ProtectedRoute User:", user);
+
+  if (authState === "loading") {
+    return <div className="text-center mt-10">Verificando sesión...</div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 }
