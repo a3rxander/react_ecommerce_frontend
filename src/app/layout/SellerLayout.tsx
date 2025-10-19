@@ -1,4 +1,6 @@
 import { Outlet, NavLink } from "react-router";
+import {useNavigate} from "react-router";
+import {useAuth} from "@/app/hooks/useAuth";
 import {
   Button,
 } from "@/components/ui/button";
@@ -26,6 +28,15 @@ import { useState } from "react";
 
 export default function SellerLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
+  const handleLogout = async () => {
+    console.debug("Logging out user");
+    await logout();
+    navigate("/login");
+  };
 
   const navItems = [
     { to: "/seller/orders", label: "Orders", icon: ShoppingCart },
@@ -67,8 +78,8 @@ export default function SellerLayout() {
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Billing</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-600">
-              <LogOut className="h-4 w-4 mr-2" />
+            <DropdownMenuItem className="text-red-600" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-2"   />
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>

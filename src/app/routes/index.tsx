@@ -18,6 +18,8 @@ import CategoriesPage from "@/pages/admin/CategoriesPage";
 
 //Seller Pages
 import SellerProductsPage from "@/pages/seller/SellerProductsPage";
+import SellerProductEditorPage from "@/pages/seller/SellerProductEditorPage";
+import SellerProductImagesPage from "@/pages/seller/SellerProductImagesPage";
 
 
 export const router = createBrowserRouter([
@@ -40,7 +42,9 @@ export const router = createBrowserRouter([
             </ProtectedRoute>
         ),
         children: [
-            { path: "products", element: <SellerProductsPage /> }
+            { path: "products", element: <SellerProductsPage /> },
+            { path: "products/:productId/edit", element: <SellerProductEditorPage /> },
+            { path: "products/:productId/images", element: <SellerProductImagesPage /> }
         ]
     },
     //Admin Routes

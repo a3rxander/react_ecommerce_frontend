@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router";
 
 import { Separator } from "@/components/ui/separator";
 import { buttonVariants } from "@/components/ui/button";

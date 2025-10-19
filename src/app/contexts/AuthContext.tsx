@@ -51,6 +51,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = async () => {
+    console.debug("Logging out user");
     await authService.logout()
       .then(() => {
         setAuthState('unauthenticated');

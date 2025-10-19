@@ -25,13 +25,20 @@ export function LoginComponent() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const mockUser=['admin','seller','customer'];
+
 
   const [credentials, setCredentials] = useState<LoginCredentials>({
-    username: "aaaaa",
-    password: "MwsgQ3chM!2026",
+    username: "",
+    password: "Panama!2025##",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCredentials((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleChange2 = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setCredentials((prev) => ({ ...prev, [name]: value }));
   };
@@ -67,6 +74,25 @@ export function LoginComponent() {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="username">Username</FieldLabel>
+                 {mockUser.length > 0 && (
+                <Field>
+                  <FieldLabel htmlFor="mock">Mock Users (for testing)</FieldLabel>
+                  <select
+                    id="mock"
+                    name="username"
+                    className="border rounded p-2 w-full"
+                    value={credentials.username}
+                    onChange={handleChange2}
+                  >
+                    <option value="">Select user</option>
+                    {mockUser.map((user) => (
+                      <option key={user} value={user}>
+                        {user}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+              )}
                 <Input
                   id="username"
                   name="username"
