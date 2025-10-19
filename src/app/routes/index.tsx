@@ -12,11 +12,14 @@ import HomePage from "@/pages/shared/HomePage";
 
 //Admin Pages
 import UsersPage from "@/pages/admin/UsersPage";
+import AdminDashboardPage from "@/pages/admin/AdminDashboardPage";
+import CreateUserPage from "@/pages/admin/CreateUserPage";
+import CategoriesPage from "@/pages/admin/CategoriesPage";
 
 //Seller Pages
 import SellerProductsPage from "@/pages/seller/SellerProductsPage";
- 
- 
+
+
 export const router = createBrowserRouter([
     {
         element: <RootLayout />,
@@ -33,7 +36,7 @@ export const router = createBrowserRouter([
             <ProtectedRoute>
                 <RoleBasedRoute role="Seller">
                     <SellerLayout />
-                </RoleBasedRoute>   
+                </RoleBasedRoute>
             </ProtectedRoute>
         ),
         children: [
@@ -47,11 +50,14 @@ export const router = createBrowserRouter([
             <ProtectedRoute>
                 <RoleBasedRoute role="Admin">
                     <AdminLayout />
-                </RoleBasedRoute>   
+                </RoleBasedRoute>
             </ProtectedRoute>
         ),
         children: [
+            { index: true, element: <AdminDashboardPage /> },
             { path: "users", element: <UsersPage /> },
+            { path: "users/create", element: <CreateUserPage /> },
+            { path: "categories", element: <CategoriesPage /> }
         ]
     }
 ]);
