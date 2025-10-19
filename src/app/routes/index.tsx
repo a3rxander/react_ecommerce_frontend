@@ -20,6 +20,7 @@ import CategoriesPage from "@/pages/admin/CategoriesPage";
 import SellerProductsPage from "@/pages/seller/SellerProductsPage";
 import SellerProductEditorPage from "@/pages/seller/SellerProductEditorPage";
 import SellerProductImagesPage from "@/pages/seller/SellerProductImagesPage";
+import SellerDashboardPage from "@/pages/seller/SellerDashboardPage";
 
 
 export const router = createBrowserRouter([
@@ -42,6 +43,7 @@ export const router = createBrowserRouter([
             </ProtectedRoute>
         ),
         children: [
+            { index: true, element: <SellerDashboardPage /> },
             { path: "products", element: <SellerProductsPage /> },
             { path: "products/:productId/edit", element: <SellerProductEditorPage /> },
             { path: "products/:productId/images", element: <SellerProductImagesPage /> }

@@ -25,7 +25,7 @@ export function LoginComponent() {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const mockUser=['admin','seller','customer'];
+  const mockUser=['administrator','seller','customer'];
 
 
   const [credentials, setCredentials] = useState<LoginCredentials>({

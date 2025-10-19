@@ -11,18 +11,21 @@ export default function HomePage() {
   useEffect(() => {
     console.log("Auth State:", authState);
     console.log("User:", user);
+    if (authState === "loading") {
+      return; // Still loading, do nothing
+    }
     if (authState !== "authenticated" || !user) {
       navigate("/login");
     }
 
     if(user?.role === "Seller") {
-      navigate("/seller/products");
+      navigate("/seller/");
     } else if(user?.role === "Customer") {
       navigate("/products");
     }else if(user?.role === "Admin") {
-      navigate("/admin/dashboard");
+      navigate("/admin/");
     }
-  }, []);
+  }, [ authState, user]);
 
   return null; // Prevent rendering while redirecting
 }
