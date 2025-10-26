@@ -4,7 +4,8 @@ import { categoryService } from "../services/categoryService";
 
 
 
-export const useCategory = (() => {
+export const useCategory = () => {
+
     const [categories, setCategories] = useState<Category[]>([]);
 
     const a_fetchCategories = async () => {
@@ -27,10 +28,12 @@ export const useCategory = (() => {
 
     const a_updateCategory = async (id: string, formData: CategoryFormData) => {
         try {
-            const updatedCategory = await categoryService.updateCategory(id, formData);
+            //set active to true by default
+            formData.isActive = true;
+            await categoryService.updateCategory(id, formData);
             setCategories((prevCategories) =>
                 prevCategories.map((category) =>
-                    category.id === id ? updatedCategory : category
+                    category.id === id ? { ...category, ...formData } : category
                 )
             );
         } catch (error) {
@@ -56,4 +59,4 @@ export const useCategory = (() => {
         a_updateCategory,
         a_deleteCategory
     };  
-});
+};

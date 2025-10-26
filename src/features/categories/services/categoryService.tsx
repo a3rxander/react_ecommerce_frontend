@@ -24,7 +24,7 @@ class CategoryService {
     }
 
     async updateCategory(categoryId: string, categoryData: CategoryFormData) {
-        try {
+        try { 
             const response = await apiJWT.put(`/v1/Categories/${categoryId}`, categoryData);
             return response.data;
         } catch (error) {
