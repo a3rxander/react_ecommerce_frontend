@@ -1,11 +1,11 @@
 import { apiLogin } from "@/lib/api/apiLogin";
 import { apiJWT } from "@/lib/api/apiJWT";
-import type { LoginCredentials } from "../types/AuthTypes";
+import type { LoginCredentials, SignupData } from "../types/AuthTypes";
 
 class AuthService {
-  async login(credentials: LoginCredentials) {
+  async login(payload: LoginCredentials) {
     try {
-      const response = await apiLogin.post("/Auth/login", credentials);
+      const response = await apiLogin.post("/Auth/login", payload);
       return response.data;
     } catch (error) {
       console.error("Login error:", error);
@@ -33,6 +33,16 @@ class AuthService {
     }
   }
 
+  async singnup(payload: SignupData) {
+    try {
+      const response = await apiLogin.post("/Auth/register", payload);
+      return response.data;
+    } catch (error) {
+      console.error("Signup error:", error);
+      throw error;
+    } 
+  }
+ 
   getToken() {
     return localStorage.getItem("authToken");
   }
