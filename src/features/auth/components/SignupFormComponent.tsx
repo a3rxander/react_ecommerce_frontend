@@ -15,12 +15,16 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import {Link, useNavigate} from "react-router"
-import { authService } from "../services/authService"
+import  { useAuth } from "@/app/hooks/useAuth"
 import type { SignupData } from "../types/AuthTypes"
 import { useState } from "react"
 
 export function SignupFormComponent() {
   const navigate = useNavigate()
+  const { signup } = useAuth();
+  const [isLoadingSubmit , setIsLoadingSubmit] = useState(false);
+
+
   const roles = ["Customer","Seller"];
   const [formData, setFormData] =   useState<SignupData>({
     username: "",
@@ -43,11 +47,14 @@ export function SignupFormComponent() {
 
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
+      setIsLoadingSubmit(true);
       try {
-        await authService.singnup(formData);
-        navigate("/login");
+        await signup(formData);
+        navigate("/");
       } catch (error) {
         console.error("Signup failed:", error);
+      } finally {
+        setIsLoadingSubmit(false);
       }
     };
   return (
@@ -69,7 +76,7 @@ export function SignupFormComponent() {
               </Field>
               
               <Field>
-                <FieldLabel htmlFor="lastName">lastName</FieldLabel>
+                <FieldLabel htmlFor="lastName">LastName</FieldLabel>
                 <Input id="lastName" name="lastName" value={formData.lastName} 
                 onChange={handleChange} type="text" placeholder="John"  required />
               </Field>
@@ -97,7 +104,7 @@ export function SignupFormComponent() {
                   required
                 />
               </Field> 
-                <Field className="grid grid-cols-2 gap-4">
+                <Field>
                   <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>
                     <Input id="password"
@@ -111,7 +118,18 @@ export function SignupFormComponent() {
                   Must be at least 8 characters long.
                 </FieldDescription> 
               <Field>
-                <Button type="submit">Create Account</Button>
+                <FieldLabel htmlFor="role">Role</FieldLabel>
+                <select id="role" name="role" value={formData.role} onChange={handleChange} 
+                className={cn("w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50")}>
+                  {roles.map((role) => (
+                    <option key={role} value={role}>
+                      {role}
+                    </option>
+                  ))}
+                </select> 
+              </Field>
+              <Field>
+                <Button type="submit" disabled={isLoadingSubmit}>{ isLoadingSubmit ? "Creating Account ..." : "Create Account"}</Button>
                 <FieldDescription className="text-center">
                   Already have an account? <Link to="/login">Sign in</Link>
                 </FieldDescription>

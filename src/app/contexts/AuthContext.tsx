@@ -7,6 +7,7 @@
    username: string;
    password: string;
  }
+import type { SignupData } from "@/features/auth/types/AuthTypes";
 
  type AuthTypeState = 'authenticated' | 'unauthenticated' | 'loading';
 
@@ -24,6 +25,7 @@ interface AuthContextProps {
    user: User | null;
    token: string | null;
    login: (credentials: Credentials) => void;
+   signup: (payload: SignupData) => void;
    logout: () => void;
  }
 
@@ -63,6 +65,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
   };
 
+  const signup = async (payload: SignupData) => {
+    setAuthState('loading');
+    await authService.singnup(payload)
+      .then((data) => {
+        setAuthState('authenticated');
+        setUser(data.user);
+        setToken(data.token);
+        authService.setToken(data.token);
+      })
+      .catch((error) => {
+        setAuthState('unauthenticated');
+        console.error("Signup error:", error);
+      });
+  };
+
   // al cargar la app, verificar si el usuario ya está autenticado con el jwt en storage
   useEffect(() => {
     const checkAuth = async () => { 
@@ -88,7 +105,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     checkAuth();
   }, []);
   return (
-    <AuthContext.Provider value={{ authState, user, token, login, logout }}>
+    <AuthContext.Provider value={{ authState, user, token, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );
